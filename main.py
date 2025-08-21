@@ -1,16 +1,36 @@
+# ------------------------------------------------------------------#
+# Sistema de Biblioteca – Modelo                                    #
+# Autor: Gustavo Pereira Goncalves de Campos                        #
+# Data Criação: 10/08/2025                                          #
+# Data Última Atualização: 10/08/2025                               #       
+# Atualização Feita por: Gustavo Pereira Goncalves de Campos        #
+# Versão: 1.0                                                       #
+# Principais Funções: gerar_id(), excluir_registros(),              #     
+# criar_cabecalho(), carregar_dados(), cadastrar_livro(),           #
+# registrar_devolucao(), cadastrar_emprestimo(),                    #
+# listar_emprestimos(), listar_livros_disponiveis(),                # 
+# limpar_console(), exportar_relatorio(), menu()                    #
+# ------------------------------------------------------------------#
+
+# Importações necessárias
 import csv
 import os
 import datetime
 from datetime import date, timedelta
 
+# Estruturas de dados (Listas/Dicionários)
 livros = []
 usuarios = []
 emprestimos = []
 
+#----------------------------
+#   Funções Principais  
+#----------------------------
+
 def gerar_id (nome_arquivo):
     if not os.path.exists(nome_arquivo) or os.path.getsize(nome_arquivo) == 0:
         return 1
-    with open (nome_arquivo, "r") as arquivo:
+    with open (nome_arquivo, "r", encoding="utf-8") as arquivo:
         reader = csv.reader(arquivo)
         next(reader, None)
         
@@ -35,34 +55,34 @@ def excluir_registros():
     pass
 
 def criar_cabecalho():
-    with open ("livros.csv", "w", newline="") as arquivo:
+    with open ("livros.csv", "w", newline="", encoding="utf-8") as arquivo:
         writer = csv.writer(arquivo)
         writer.writerow(["id", "titulo", "autor", "ano de lancamento", "isbn", "status"])
 
-    with open ("usuarios.csv", "w", newline="") as arquivo:
+    with open ("usuarios.csv", "w", newline="", encoding="utf-8") as arquivo:
         writer = csv.writer(arquivo)
         writer.writerow(["id", "nome", "matricula", "email"])
 
-    with open ("emprestimos.csv", "w", newline="") as arquivo:
+    with open ("emprestimos.csv", "w", newline="", encoding="utf-8") as arquivo:
         writer = csv.writer(arquivo)
         writer.writerow(["id", "usuario_fk", "livro_fk", "data_retirada", "data_devolucao"])
     pass
 
 def carregar_dados ():    
     if os.path.exists("livros.csv"):
-            with open ("livros.csv", "r") as arquivo:
+            with open ("livros.csv", "r", encoding="utf-8") as arquivo:
                 reader = csv.DictReader(arquivo)
                 for linhas in arquivo:
                     livros.append(linhas)
 
     if os.path.exists("usuarios.csv"):
-            with open ("usuarios.csv", "r") as arquivo:
+            with open ("usuarios.csv", "r", encoding="utf-8") as arquivo:
                 reader = csv.DictReader(arquivo)
                 for linhas in arquivo:
                     usuarios.append(linhas)
 
     if os.path.exists("emprestimos.csv"):
-            with open ("emprestimos.csv", "r") as arquivo:
+            with open ("emprestimos.csv", "r", encoding="utf-8") as arquivo:
                 reader = csv.DictReader(arquivo)
                 for linhas in arquivo:
                     emprestimos.append(linhas)
@@ -78,7 +98,7 @@ def cadastrar_livro ():
 
     informations = [id_livro, titulo, autor, ano, isbn, status]
 
-    with open ("livros.csv", "a", newline="") as arquivo:
+    with open ("livros.csv", "a", newline="", encoding="utf-8") as arquivo:
         writer = csv.writer(arquivo)
         writer.writerow(informations)
         carregar_dados()
@@ -91,7 +111,7 @@ def cadastrar_usuario ():
 
     informations = [id_usuario, nome, matricula, email]
 
-    with open ("usuarios.csv", "a", newline="") as arquivo:
+    with open ("usuarios.csv", "a", newline="", encoding="utf-8") as arquivo:
         writer = csv.writer(arquivo)
         writer.writerow(informations)
         carregar_dados()
@@ -102,7 +122,7 @@ def registrar_devolucao ():
     livros = []
     find = False
 
-    with open ("livros.csv", "r", newline="") as arquivo: 
+    with open ("livros.csv", "r", newline="", encoding="utf-8") as arquivo: 
         reader = csv.reader(arquivo)
         for line in reader: 
             if line[0] == str(livro_fk):
@@ -117,7 +137,7 @@ def registrar_devolucao ():
         print("livro não está registrado ou já está disponivel!")
         return 
 
-    with open("livros.csv", "w", newline="") as arquivo: 
+    with open("livros.csv", "w", newline="", encoding="utf-8") as arquivo: 
         writer = csv.writer(arquivo)
         writer.writerows(livros)
 
@@ -158,11 +178,10 @@ def cadastrar_emprestimo():
         carregar_dados()
 
     print("empréstimo salvo com sucesso!")
-    print("data do atual =", data_atual)
-    print("data da devolução =", data_futura)
+    print(f"data do emprestimo: {data_atual} | data da devolucao: {data_futura}")
 
 def listar_emprestimos():
-    with open ("emprestimos.csv", "r") as arquivo:
+    with open ("emprestimos.csv", "r", encoding="utf-8") as arquivo:
         reader = csv.reader(arquivo)
         # next(arquivo, None)
 
@@ -172,7 +191,7 @@ def listar_emprestimos():
 def listar_livros_disponiveis(): 
     livros_disponiveis = []
 
-    with open ("livros.csv", "r", newline="") as arquivo: 
+    with open ("livros.csv", "r", newline="", encoding="utf-8") as arquivo: 
         reader = csv.reader(arquivo)
         for line in reader: 
             if line[-1] == "True":
@@ -189,6 +208,18 @@ def listar_livros_disponiveis():
 def limpar_console () :
     os.system("cls")
 
+def exportar_relatorio ():
+    # livros_string = ""
+    # for livro in livros:
+    #     livros_string += f"Título: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']}\n"
+
+    # print(livros_string)
+    pass
+
+#----------------------------
+#   Menu principal
+#----------------------------
+
 def menu():
     while True:
         print("\n=== Sistema de Biblioteca ===")
@@ -199,6 +230,7 @@ def menu():
         print("5 - Listar Livros Disponíveis")
         print("6 - Listar Empréstimos")
         print("7 - Limpar Console")
+        print("8 - Exportar relatório")
         print("0 - Sair")
         opcao = input("Escolha uma opção: ")
         if opcao == "1":
@@ -215,12 +247,18 @@ def menu():
             listar_emprestimos()
         elif opcao == "7": 
             limpar_console()
+        elif opcao == "8": 
+            exportar_relatorio()
         elif opcao == "0":
             print("salva os dados e sai do sistema")
             print("Saindo do sistema...")
             break
         else:
             print("Opção inválida! Tente novamente.")
+
+#----------------------------
+#   Execução Principal
+#----------------------------
 
 excluir_registros()
 criar_cabecalho()
