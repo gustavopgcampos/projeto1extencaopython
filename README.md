@@ -39,4 +39,5 @@ As principais funções dentro do sistema são:
 - **listar_emprestimos()** - Responsável por listar todos os empréstimos registrados no tempo de execução do programa.
 - **listar_livros_disponiveis()** - Responsável por listar todos os livros que possuem o status de disponíveis dentro do tempo de execução.
 - **limpar_console()** - Responsável por limpar o console e facilitar a visualização da execução do programa.
+- **exportar_relatorio()** - Responsável por exportar um relatório sobre os livros disponíveis, os usuários presentes no sistema e todos os empréstimos feitos durante o tempo de execução.
 - **menu()** - Responsável por exibir o menu de opções no console para o usuário.
