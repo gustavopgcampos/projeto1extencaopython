@@ -235,13 +235,44 @@ def listar_livros_disponiveis():
 def limpar_console () :
     os.system("cls")
 
-def exportar_relatorio ():
-    # livros_string = ""
-    # for livro in livros:
-    #     livros_string += f"Título: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']}\n"
+def exportar_relatorio():
+    try:
+        relatorio = "\n=== relatório da biblioteca ===\n\n"
 
-    # print(livros_string)
-    pass
+        relatorio += "livros"
+        with open("livros.csv", "r", encoding="utf-8") as arquivo:
+            reader = csv.reader(arquivo)
+            next(reader, None)
+            for linha in reader:
+                if linha:
+                    relatorio += f"ID: {linha[0]} | titulo: {linha[1]} | autor: {linha[2]} | ano: {linha[3]} | ISBN: {linha[4]} | status: {linha[5]}\n"
+        relatorio += "\n"
+
+        relatorio += "usuarios:\n"
+        with open("usuarios.csv", "r", encoding="utf-8") as arquivo:
+            reader = csv.reader(arquivo)
+            next(reader, None)
+            for linha in reader:
+                if linha:
+                    relatorio += f"ID: {linha[0]} | nome: {linha[1]} | matrícula: {linha[2]} | email: {linha[3]}\n"
+        relatorio += "\n"
+
+        relatorio += "empréstimos:\n"
+        with open("emprestimos.csv", "r", encoding="utf-8") as arquivo:
+            reader = csv.reader(arquivo)
+            next(reader, None)
+            for linha in reader:
+                if linha:
+                    relatorio += f"ID: {linha[0]} | usuário FK: {linha[1]} | livro FK: {linha[2]} | retirada: {linha[3]} | devolução: {linha[4]}\n"
+
+        with open("relatorio.txt", "w", encoding="utf-8") as arquivo_txt:
+            arquivo_txt.write(relatorio)
+
+        print(relatorio if relatorio.strip() else "nenhum dado para exportar.")
+        print("\n relatório exportado para 'relatorio.txt'")
+    except Exception as error:
+        print("erro ao exportar relatório:", error)
+
 
 #----------------------------
 #   Menu principal
