@@ -2,7 +2,7 @@
 # Sistema de Biblioteca – Modelo                                    #
 # Autor: Gustavo Pereira Goncalves de Campos                        #
 # Data Criação: 10/08/2025                                          #
-# Data Última Atualização: 10/08/2025                               #       
+# Data Última Atualização: 25/08/2025                               #       
 # Atualização Feita por: Gustavo Pereira Goncalves de Campos        #
 # Versão: 1.0                                                       #
 # Principais Funções: gerar_id(), excluir_registros(),              #     
